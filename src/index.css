@@ -3,17 +3,12 @@
 @tailwind utilities;
 
 :root {
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #0f172a;
+  color: #2a1810;
+  background-color: #fefcf7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -26,60 +21,87 @@ body {
   min-height: 100vh;
 }
 
-/* Heritage Spice Custom Utility Classes from Stitch */
-.heritage-divider {
-  height: 2px;
-  background: linear-gradient(to right, transparent, #d97706, transparent);
+/* ---------------------------------------------------------
+   Signature motif: the "kasavu border" — a thin repeating
+   gold-thread strip echoing the zari edge of a kasavu mundu.
+   Used as a frame device across the site instead of a plain
+   rule/divider.
+--------------------------------------------------------- */
+.kasavu-strip {
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #d9a441 0px,
+    #d9a441 3px,
+    transparent 3px,
+    transparent 9px
+  );
+  background-color: #6e1f17;
 }
 
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+.kasavu-frame {
+  position: relative;
+}
+.kasavu-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #d9a441, #96702f 45%, #d9a441 100%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Brass medallion badge, used for ratings / bestseller marks */
+.medallion {
+  background: radial-gradient(circle at 30% 30%, #eec26b, #96702f 78%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    0 2px 6px rgba(62, 21, 12, 0.35);
+}
+
+/* Horizontal product shelves (Amazon-style rows) */
+.shelf-scroll {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: #d6b570 transparent;
+}
+.shelf-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.shelf-scroll::-webkit-scrollbar-thumb {
+  background: #d6b570;
+  border-radius: 999px;
+}
+.shelf-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.shelf-card {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+
+/* Subtle sun-dot texture reminiscent of drying mango slices on a mat */
+.dot-texture {
+  background-image: radial-gradient(
+    circle,
+    rgba(150, 112, 47, 0.16) 1.5px,
+    transparent 1.5px
+  );
+  background-size: 18px 18px;
 }
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
-}
-
-.process-hero {
-  position: relative;
-  overflow: hidden;
-}
-
-.process-hero::before {
-  content: "";
-  position: absolute;
-  inset: -20% auto auto -10%;
-  width: 260px;
-  height: 260px;
-  border-radius: 9999px;
-  background: radial-gradient(
-    circle,
-    rgba(251, 191, 36, 0.22),
-    transparent 70%
-  );
-  animation: drift 8s ease-in-out infinite;
-}
-
-.process-card {
-  opacity: 0;
-  animation: fadeInUp 700ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  transition:
-    transform 250ms ease,
-    box-shadow 250ms ease,
-    border-color 250ms ease;
-}
-
-.process-card:hover {
-  transform: translateY(-6px);
-  border-color: #f59e0b;
-  box-shadow: 0 24px 70px -28px rgba(120, 53, 15, 0.38);
-}
-
-.process-glow {
-  transform: translateY(-20px);
-  animation: pulseGlow 3.4s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -92,10 +114,10 @@ body {
   }
 }
 
-@keyframes fadeInUp {
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -103,24 +125,14 @@ body {
   }
 }
 
-@keyframes drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(20px, -10px, 0) scale(1.08);
-  }
+.marquee-track {
+  animation: marquee 22s linear infinite;
 }
-
-@keyframes pulseGlow {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: translateY(-20px);
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
   }
-  50% {
-    opacity: 1;
-    transform: translateY(-10px);
+  100% {
+    transform: translateX(-50%);
   }
 }

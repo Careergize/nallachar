@@ -11,7 +11,7 @@ export default function Layout() {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.16),_transparent_35%),linear-gradient(135deg,_#fffdf8_0%,_#fef3c7_100%)] text-stone-800 font-sans">
+    <div className="dot-texture min-h-screen flex flex-col bg-ivory-50 font-sans text-ink">
       <Header />
       <main className="flex-grow">
         <Outlet />
